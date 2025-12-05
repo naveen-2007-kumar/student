@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>College Admission — Apply Now</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #0b1220;
+      --accent: #3b82f6;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --error: #ef4444;
+      --ok: #10b981;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px circle at 10% 10%, #0b1730 0%, #0f172a 35%, #0b1220 100%);
+      color: var(--text);
+    }
+    header { padding: 24px; text-align: center; }
+    header h1 { margin: 0 0 8px; font-size: 28px; }
+    header p { margin: 0; color: var(--muted); }
+    main {
+      max-width: 1080px; margin: 24px auto; padding: 0 16px;
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px;
+    }
+    .card {
+      background: rgba(11, 18, 32, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      border-radius: 16px; backdrop-filter: blur(6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .card h2 { margin: 0; padding: 16px 20px; border-bottom: 1px solid rgba(148,163,184,0.15); font-size: 18px; }
+    form { padding: 20px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .full { grid-column: 1 / -1; }
+    label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+    input, select, textarea {
+      width: 100%; padding: 10px 12px; border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.2); background: #0d1526; color: var(--text);
+      outline: none; transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,0.25);
+    }
+    .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+    .error { font-size: 12px; color: var(--error); margin-top: 6px; display: none; }
+    .ok { font-size: 12px; color: var(--ok); margin-top: 6px; display: none; }
+    .actions { display: flex; gap: 12px; padding-top: 10px; }
+    button {
+      padding: 10px 16px; border: 0; border-radius: 10px; cursor: pointer; font-weight: 600;
+    }
+    .primary { background: var(--accent); color: white; }
+    .ghost { background: transparent; color: var(--text); border: 1px solid rgba(148,163,184,0.25); }
+    .aside { padding: 16px 20px; }
+    .timeline { list-style: none; padding: 0; margin: 0; }
+    .timeline li { padding: 12px 0; border-bottom: 1px solid rgba(148,163,184,0.15); }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; background: rgba(59,130,246,0.15); color: #93c5fd; }
+    footer { text-align: center; padding: 24px; color: var(--muted); }
+    @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>National Institute of Technology — Admission 2026</h1>
+    <p>Apply for B.Tech / M.Tech / B.Sc / MBA. Quick review, transparent status, secure uploads.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Admission form</h2>
+      <form id="admissionForm" novalidate>
+        <div class="row">
+          <div>
+            <label for="firstName">First name</label>
+            <input id="firstName" name="firstName" required minlength="2" />
+            <div class="error" data-for="firstName">Please enter at least 2 characters.</div>
+          </div>
+          <div>
+            <label for="lastName">Last name</label>
+            <input id="lastName" name="lastName" required minlength="2" />
+            <div class="error" data-for="lastName">Please enter at least 2 characters.</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required />
+            <div class="error" data-for="email">Enter a valid email address.</div>
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" inputmode="numeric" pattern="^[6-9]\d{9}$" required />
+            <div class="hint">Indian mobile numbers: start 6–9, 10 digits.</div>
+            <div class="error" data-for="phone">Enter a valid 10-digit Indian mobile number.</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="dob">Date of birth</label>
+            <input id="dob" name="dob" type="date" required />
+            <div class="error" data-for="dob">Please select your date of birth.</div>
+          </div>
+          <div>
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+              <option value="">Select category</option>
+              <option>General</option>
+              <option>OBC</option>
+              <option>SC</option>
+              <option>ST</option>
+              <option>EWS</option>
+            </select>
+            <div class="error" data-for="category">Please select a category.</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="program">Program</label>
+            <select id="program" name="program" required>
+              <option value="">Select program</option>
+              <option value="btech">B.Tech</option>
+              <option value="mtech">M.Tech</option>
+              <option value="bsc">B.Sc</option>
+              <option value="mba">MBA</option>
+            </select>
+            <div class="error" data-for="program">Please select a program.</div>
+          </div>
+          <div>
+            <label for="branch">Preferred branch</label>
+            <select id="branch" name="branch" required>
+              <option value="">Select branch</option>
+            </select>
+            <div class="error" data-for="branch">Please select a branch.</div>
+          </div>
+        </div>
+
+        <div class="row full">
+          <div class="full">
+            <label for="address">Address</label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+            <div class="error" data-for="address">Address is required.</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="marks">12th/Undergrad percentage</label>
+            <input id="marks" name="marks" type="number" min="0" max="100" step="0.1" required />
+            <div class="error" data-for="marks">Enter a number between 0 and 100.</div>
+          </div>
+          <div>
+            <label for="docs">Upload documents (PDF)</label>
+            <input id="docs" name="docs" type="file" accept="application/pdf" required />
+            <div class="error" data-for="docs">Please upload a PDF file.</div>
+          </div>
+        </div>
+
+        <div class="row full">
+          <div class="full">
+            <label for="statement">Statement of purpose</label>
+            <textarea id="statement" name="statement" rows="4" minlength="50" placeholder="Tell us about your goals and experience..." required></textarea>
+            <div class="hint">Min 50 characters. Be specific and concise.</div>
+            <div class="error" data-for="statement">Please write at least 50 characters.</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="primary">Submit application</button>
+          <button type="reset" class="ghost">Reset</button>
+        </div>
+        <p class="ok" id="successMsg">Application submitted successfully. Check your status in the dashboard.</p>
+        <p class="error" id="submitError">Submission failed. Please try again.</p>
+      </form>
+    </section>
+
+    <aside class="card aside">
+      <h2>Important dates</h2>
+      <ul class="timeline">
+        <li><span class="badge">Now</span> Applications open</li>
+        <li><span class="badge">15 Jan</span> Last date to apply</li>
+        <li><span class="badge">28 Jan</span> Shortlist announcement</li>
+        <li><span class="badge">05 Feb</span> Interviews</li>
+        <li><span class="badge">15 Feb</span> Final results</li>
+      </ul>
+      <h2 style="margin-top:16px;">Help</h2>
+      <p class="hint">Need assistance? Visit the admin dashboard to track your application and upload missing documents.</p>
+    </aside>
+  </main>
+
+  <footer>© 2026 NIT Admissions. Secure & transparent.</footer>
+
+  <script>
+    // Program → Branch dynamic options
+    const programToBranches = {
+      btech: ["Computer Science", "Electronics", "Mechanical", "Civil", "AI & Data Science"],
+      mtech: ["Computer Science", "VLSI", "Thermal Engineering", "Structural Engineering"],
+      bsc: ["Physics", "Chemistry", "Mathematics", "Data Science"],
+      mba: ["Finance", "Marketing", "Operations", "Business Analytics"]
+    };
+    const programEl = document.getElementById('program');
+    const branchEl = document.getElementById('branch');
+
+    programEl.addEventListener('change', () => {
+      branchEl.innerHTML = '<option value="">Select branch</option>';
+      const branches = programToBranches[programEl.value] || [];
+      for (const b of branches) {
+        const opt = document.createElement('option');
+        opt.value = b.toLowerCase().replace(/\s+/g, '-');
+        opt.textContent = b;
+        branchEl.appendChild(opt);
+      }
+    });
+
+    // Simple validation helpers
+    const form = document.getElementById('admissionForm');
+    const successMsg = document.getElementById('successMsg');
+    const submitError = document.getElementById('submitError');
+
+    function showError(input, msg) {
+      const el = document.querySelector(`.error[data-for="${input.id}"]`);
+      if (el) { el.style.display = 'block'; el.textContent = msg; }
+      input.setAttribute('aria-invalid', 'true');
+    }
+    function hideError(input) {
+      const el = document.querySelector(`.error[data-for="${input.id}"]`);
+      if (el) el.style.display = 'none';
+      input.removeAttribute('aria-invalid');
+    }
+
+    function validateField(input) {
+      if (input.validity.valueMissing) { showError(input, 'This field is required.'); return false; }
+      if (input.id === 'phone' && !/^[6-9]\d{9}$/.test(input.value)) { showError(input, 'Enter a valid 10-digit Indian mobile number.'); return false; }
+      if (input.id === 'statement' && input.value.trim().length < 50) { showError(input, 'Please write at least 50 characters.'); return false; }
+      if (input.id === 'docs' && input.files[0]?.type !== 'application/pdf') { showError(input, 'Please upload a PDF file.'); return false; }
+      if (input.validity.rangeUnderflow || input.validity.rangeOverflow) { showError(input, 'Enter a number between 0 and 100.'); return false; }
+      if (input.validity.typeMismatch || input.validity.tooShort) { showError(input, 'Please check this value.'); return false; }
+      hideError(input);
+      return true;
+    }
+
+    form.addEventListener('input', (e) => {
+      const target = e.target;
+      if (['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) validateField(target);
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitError.style.display = 'none';
+      successMsg.style.display = 'none';
+
+      // Validate all
+      const inputs = Array.from(form.querySelectorAll('input, select, textarea'));
+      const allValid = inputs.every(validateField);
+      if (!allValid) return;
+
+      // Build payload
+      const fd = new FormData(form);
+      const payload = {
+        id: 'APP-' + Math.random().toString(36).slice(2, 8).toUpperCase(),
+        firstName: fd.get('firstName'),
+        lastName: fd.get('lastName'),
+        email: fd.get('email'),
+        phone: fd.get('phone'),
+        dob: fd.get('dob'),
+        category: fd.get('category'),
+        program: fd.get('program'),
+        branch: fd.get('branch'),
+        address: fd.get('address'),
+        marks: Number(fd.get('marks')),
+        statement: fd.get('statement'),
+        status: 'Submitted',
+        submittedAt: new Date().toISOString()
+      };
+
+      try {
+        // Demo: persist locally for the admin dashboard
+        const existing = JSON.parse(localStorage.getItem('applications') || '[]');
+        existing.push(payload);
+        localStorage.setItem('applications', JSON.stringify(existing));
+
+        // Demo: store doc as a separate key (in production, upload to storage and save URL)
+        const pdf = fd.get('docs');
+        if (pdf) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            localStorage.setItem(`doc:${payload.id}`, reader.result); // base64 data URL (for demo)
+          };
+          reader.readAsDataURL(pdf);
+        }
+
+        // Optional real API call:
+        // const res = await fetch('/api/applications', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify(payload)
+        // });
+        // if (!res.ok) throw new Error('Network error');
+
+        successMsg.style.display = 'block';
+        form.reset();
+        branchEl.innerHTML = '<option value="">Select branch</option>';
+      } catch (err) {
+        console.error(err);
+        submitError.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
